@@ -1,0 +1,21 @@
+[source0]
+enable = 1
+type = 3#源类型
+uri = https://111
+num-sources = 1
+gpu-id = 0
+cudadec-memtype = 0
+
+[source1]
+enable = 1
+type = 3#源类型
+uri = https://222
+num-sources = 1
+gpu-id = 0
+cudadec-memtype = 0
+
+[source2]
+enable = 1
+type = 3
+num-source = 1
+

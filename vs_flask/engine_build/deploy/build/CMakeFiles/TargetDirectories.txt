@@ -1,0 +1,4 @@
+/home/vs_flask/engine_build/deploy/build/CMakeFiles/rebuild_cache.dir
+/home/vs_flask/engine_build/deploy/build/CMakeFiles/edit_cache.dir
+/home/vs_flask/engine_build/deploy/build/CMakeFiles/yolov5.dir
+/home/vs_flask/engine_build/deploy/build/CMakeFiles/myplugins.dir

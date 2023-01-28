@@ -1,0 +1,353 @@
+################################################################################
+#多路推理配置文件
+#
+#
+################################################################################
+
+[application] #与指定组件无关的配置
+enable-perf-measurement=1 #是否启用性能测试
+perf-measurement-interval-sec=5 #性能测试的间隔时间
+#gie-kitti-output-dir=streamscl
+
+[tiled-display] #平铺显示
+enable=2#是否启用平铺显示
+rows=2#平铺显示的行数
+columns=4#平铺显示的列数
+width=1280#平铺显示的宽度
+height=720#平铺显示的高度
+gpu-id=0#GPU id
+#(0): nvbuf-mem-default - Default memory allocated, specific to particular platform
+#(1): nvbuf-mem-cuda-pinned - Allocate Pinned/Host cuda memory, applicable for Tesla
+#(2): nvbuf-mem-cuda-device - Allocate Device cuda memory, applicable for Tesla
+#(3): nvbuf-mem-cuda-unified - Allocate Unified cuda memory, applicable for Tesla
+#(4): nvbuf-mem-surface-array - Allocate Surface Array memory, applicable for Jetson
+nvbuf-memory-type=0#内存类型
+
+[source0] #源配置。多个源时，命名：[source0] ,[source1] , ...
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3#源类型
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=1
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+[source1] #源配置。多个源时，命名：[source0] ,[source1] , ...
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3#源类型
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=1
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+[source2]
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=1
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+
+[source3]
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=1
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+latency=200
+
+[source4]
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=1
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+
+[source5]
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=1
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+
+[source6]
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=6
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+
+[source7]
+enable=1
+#Type - 1=CameraV4L2 2=URI 3=MultiURI
+type=3
+#uri=file://../../samples/streams/sample_1080p_h264.mp4
+uri=rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources=7
+gpu-id=0
+# (0): memtype_device   - Memory type Device
+# (1): memtype_pinned   - Memory type Host Pinned
+# (2): memtype_unified  - Memory type Unified
+cudadec-memtype=0
+
+[sink0] #sink组件的相关配置。表示了输出（如显示、文件渲染、编码、文件保存）。一个管道可以包含多个sink。组的命名须为[sink0]， [sink1], ..
+enable=2
+#Type - 1=FakeSink 2=EglSink 3=File
+type=2
+sync=0
+source-id=0
+gpu-id=0
+codec=1
+nvbuf-memory-type=0
+
+[sink1]
+enable=0
+#Type - 1=FakeSink 2=EglSink 3=File 4=UDPSink 5=nvoverlaysink 6=MsgConvBroker
+type=4
+msg-conv-config=dstest5_msgconv_sample_config.txt
+msg-conv-payload-type=1
+msg-broker-proto-lib=/opt/nvidia/deepstream/deepstream-5.1/lib/libnvds_kafka_proto.so
+#Provide your msg-broker-conn-str here
+msg-broker-conn-str=127.0.0.1;9092;test
+topic=test
+codec=1
+
+[sink2]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8554
+udp-port=5401
+gpu-id=0
+source-id=0
+link-to-demux=1
+codec=1
+
+[sink3]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8555
+udp-port=5402
+gpu-id=0
+source-id=1
+link-to-demux=1
+codec=1
+
+[sink4]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8556
+udp-port=5403
+gpu-id=0
+source-id=2
+link-to-demux=1
+
+
+[sink5]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8557
+udp-port=5404
+gpu-id=0
+source-id=3
+link-to-demux=1
+
+
+[sink6]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8558
+udp-port=5405
+gpu-id=0
+source-id=4
+link-to-demux=1
+
+
+
+[sink7]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8559
+udp-port=5406
+gpu-id=0
+source-id=5
+link-to-demux=1
+
+
+
+[sink8]
+enable=1
+type=4
+codec=1
+enc-type=0
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8560
+udp-port=5407
+gpu-id=0
+source-id=6
+link-to-demux=1
+
+
+
+
+[sink9]
+enable=1
+type=4
+codec=1
+enc-type=0
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8561
+udp-port=5408
+gpu-id=0
+source-id=7
+link-to-demux=1
+
+
+
+[sink10]
+enable=1
+type=4
+codec=1
+enc-type=1
+sync=0
+bitrate=1000000
+profile=0
+rtsp-port=8562
+udp-port=5409
+gpu-id=0
+source-id=8
+link-to-demux=1
+
+[osd] #OSD(on-screen display)组件相关配置。包括每一帧上显示的文本和矩形框
+enable=1
+gpu-id=0
+border-width=1
+text-size=15
+text-color=1;1;1;1;
+text-bg-color=0.3;0.3;0.3;1
+font=Serif
+show-clock=0
+clock-x-offset=800
+clock-y-offset=820
+clock-text-size=12
+clock-color=1;0;0;0
+nvbuf-memory-type=0
+
+[streammux] #streammux（混流）组件的配置和更改
+gpu-id=0
+##Boolean property to inform muxer that sources are live
+live-source=1
+batch-size=8
+##time out in usec, to wait after the first buffer is available
+##to push the batch even if the complete batch is not formed
+batched-push-timeout=40000
+## Set muxer output width and height
+width=1280
+height=720
+##Enable to maintain aspect ratio wrt source, and allow black borders, works
+##along with width, height properties
+enable-padding=0
+nvbuf-memory-type=0
+
+# config-file property is mandatory for any gie section.
+# Other properties are optional and if set will override the properties set in
+# the infer config file.
+[primary-gie] #GIE推理引擎的相关配置
+enable=1
+gpu-id=0
+#model-engine-file=model_b1_gpu0_int8.engine
+labelfile-path=labels.txt
+batch-size=8
+#Required by the app for OSD, not a plugin property
+bbox-border-color0=1;0;0;1
+bbox-border-color1=0;1;1;1
+bbox-border-color2=0;0;1;1
+bbox-border-color3=0;1;0;1
+interval=8
+gie-unique-id=1
+nvbuf-memory-type=0
+config-file=config_infer_primary_yoloV3.txt
+
+[tracker] #目标跟组的相关配置
+enable=1
+tracker-width=640
+tracker-height=384
+ll-lib-file=/opt/nvidia/deepstream/deepstream-5.1/lib/libnvds_mot_klt.so
+#ll-lib-file=/opt/nvidia/deepstream/deepstream-5.1/lib/libnvds_mot_iou.so
+[tests]
+file-loop=0

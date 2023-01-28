@@ -1,0 +1,130 @@
+2023-01-11 16:54:11,427 - app.py[line:57] - INFO: ===2023-01-11 16:54:11===
+
+2023-01-11 16:54:26,517 - app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 16:54:26,518 - app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 16:54:36,517 - app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 16:54:36,519 - app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:06:36,338 - /home/vs_flask/app.py[line:57] - INFO: ===2023-01-11 18:06:36===
+
+2023-01-11 18:06:51,438 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:06:51,439 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:07:01,439 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:07:01,440 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:07:11,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:07:11,439 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:07:21,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:07:21,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:07:31,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:07:31,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:07:41,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:07:41,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:07:51,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:07:51,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:08:01,438 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:08:01,439 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:08:11,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:08:11,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:08:21,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:08:21,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:08:31,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:08:31,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:08:41,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:08:41,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:08:51,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:08:51,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:09:01,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:09:01,439 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:09:11,438 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:09:11,439 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:09:21,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:09:21,439 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:09:31,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:09:31,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-11 18:09:41,437 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-11 18:09:41,438 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-12 02:16:27,418 - app.py[line:57] - INFO: ===2023-01-12 02:16:27===
+
+2023-01-13 00:49:09,297 - /home/vs_flask/app.py[line:57] - INFO: ===2023-01-13 00:49:09===
+
+2023-01-13 00:49:24,384 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:49:24,385 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:49:34,384 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:49:34,385 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:49:44,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:49:44,384 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:49:54,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:49:54,384 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:50:04,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:50:04,384 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:50:14,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:50:14,384 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:50:24,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:50:24,384 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:50:34,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:50:34,383 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 00:50:44,383 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 00:50:44,384 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+
+2023-01-13 07:46:04,535 - /home/vs_flask/app.py[line:57] - INFO: ===2023-01-13 07:46:04===
+
+2023-01-13 07:46:19,617 - /home/vs_flask/app.py[line:69] - INFO: ===现有的client list ===: None
+
+2023-01-13 07:46:19,618 - /home/vs_flask/app.py[line:87] - INFO: 参与静默巡视的相机 : 0
+

@@ -1,0 +1,1 @@
+cd /home/cookoo/jzx_workspace/tensorRT_Pro/workspace && ./pro arcface

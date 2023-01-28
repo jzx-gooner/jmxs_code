@@ -1,0 +1,43 @@
+#重启
+sudo service apache2 restart
+
+# redis-server 已经在代码里开启
+
+
+# 依赖
+×× 环境是conda创建的python3.8 
+×× grequest 并发的数据请求
+
+
+# 几个关键的数据说明
+
+
+1.client list pool 要发送检测数据的地址
+
+{"eyJhbGciOiJIUzUxMiIsImlhdCI6MTY1MzQ0NzMyMywiZXhwIjoxNjUzNDUwOTIzfQ.eyJpZCI6InVzZXIxIn0.8-VXnKvIoOtzTyceyQzVGU2fl2_S2a2N63Qd7TcYHfutcTdxClzkUUztaBq_PG9IBjgN-JOkDxdN19F04mstMw": {"url": "http://192.168.114.175:9000/api/AlarmResult/", "time": 1653447323.1491132}}
+
+received_id 是key。数值是 {url,time}
+
+
+
+2.cameralist pool
+
+key 是相机ID，里面词典对应的是 rtsp：rtsp地址，enable：0  ip：ip地址 
+
+
+3.设置相机状态是修改 cameralist pool
+
+如果 key一样，就是 id一样，修改 rtsp，修改 enable 为1.修改ip
+
+这样就更新了cameralist pool
+
+
+4 deepstream id pool
+
+这里面记录开启的相机 
+是一个列表 open_list=[["id","rtsp",'0','ip]]
+这个列表有两个作用，1,用他来指导deepstream的config  2.用它的顺序 记录 id ，列表的顺序就是source id 的顺序。
+
+
+
+

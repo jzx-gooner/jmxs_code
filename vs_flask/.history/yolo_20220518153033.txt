@@ -1,0 +1,15 @@
+[source0]
+enable = 1
+type = 3#源类型
+uri = https://111
+num-sources = 1
+gpu-id = 0
+cudadec-memtype = 0
+
+[source1]
+enable = 1
+type = 3#源类型
+uri = rtsp://admin:lnint521@192.168.212.22:554/cam/realmonitor?channel=1&subtype=1
+num-sources = 1
+gpu-id = 0
+cudadec-memtype = 0
