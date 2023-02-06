@@ -1,0 +1,6 @@
+person
+gz_blue
+gz_gray
+gz_mj
+wcaqm
+wcgz

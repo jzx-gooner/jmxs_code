@@ -1,0 +1,204 @@
+[application]
+enable-perf-measurement = 1
+perf-measurement-interval-sec = 5
+
+[tiled-display]
+enable = 1
+rows = 1
+columns = 2
+width = 1280
+height = 720
+gpu-id = 0
+nvbuf-memory-type = 0
+
+[source0]
+enable=1
+type=3 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri=file://../../../../../samples/streams/sample_1080p_h264.mp4
+num-sources=1 #only type3 use
+gpu-id=0
+cudadec-memtype=0
+latency=200 #only for rtsp
+drop-frame-interval=5
+
+
+[source1]
+enable = 1
+type = 3 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri = file://../../../../../samples/streams/face_tracker.mp4
+num-sources = 1 #only type3 use
+gpu-id = 0
+cudadec-memtype = 0
+latency = 200 #only for rtsp
+drop-frame-interval = 5
+
+[source2]
+enable = 0
+type = 4 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri = rtsp://admin:LNINT-kjg2016@192.168.2.199:554/Streaming/Channels/1
+num-sources = 1 #only type3 use
+gpu-id = 0
+cudadec-memtype = 0
+latency = 200 #only for rtsp
+drop-frame-interval = 5
+
+[source3]
+enable = 0
+type = 4 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri = rtsp://admin:sgai123456@192.168.228.25:554/Streaming/Channels/1
+num-sources = 1 #only type3 use
+gpu-id = 0
+cudadec-memtype = 0
+latency = 200 #only for rtsp
+drop-frame-interval = 5
+
+[source4]
+enable = 0
+type = 4 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri = rtsp://admin:sgai123456@192.168.228.25:554/Streaming/Channels/1
+num-sources = 1 #only type3 use
+gpu-id = 0
+cudadec-memtype = 0
+latency = 200 #only for rtsp
+drop-frame-interval = 5
+
+[source5]
+enable = 0
+type = 4 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri = rtsp://admin:sgai123456@192.168.228.25:554/Streaming/Channels/1
+num-sources = 1 #only type3 use
+gpu-id = 0
+cudadec-memtype = 0
+latency = 200 #only for rtsp
+drop-frame-interval = 5
+
+[source6]
+enable = 0
+type = 4 #Type-1=CameraV4L2 2=URI 3=MultiURI 4:RTSP
+uri = rtsp://admin:sgai123456@192.168.228.25:554/Streaming/Channels/1
+num-sources = 1 #only type3 use
+gpu-id = 0
+cudadec-memtype = 0
+latency = 200 #only for rtsp
+drop-frame-interval = 5
+
+[sink0]
+enable = 0
+type = 1
+codec = 1
+enc-type = 0
+sync = 0
+
+[sink1]
+enable = 0
+type = 1
+msg-conv-config = dstest5_msgconv_sample_config.txt
+msg-conv-payload-type = 0
+msg-broker-proto-lib = /opt/nvidia/deepstream/deepstream-5.1/lib/libnvds_kafka_proto.so
+msg-broker-conn-str = localhost;9092;quickstart-events
+
+[sink2]
+enable = 0
+type = 1
+codec = 1
+enc-type = 1
+sync = 0
+bitrate = 10000
+rtsp-port = 8554
+udp-port = 5400
+source-id = 0
+link-to-demux = 1
+
+[sink3]
+enable = 0
+type = 1
+codec = 1
+enc-type = 1
+sync = 0
+bitrate = 10000
+rtsp-port = 8555
+udp-port = 5401
+source-id = 1
+link-to-demux = 1
+
+[sink4]
+enable = 0
+type = 1
+codec = 1
+enc-type = 1
+sync = 0
+bitrate = 10000
+rtsp-port = 8556
+udp-port = 5402
+source-id = 2
+link-to-demux = 1
+
+[sink5]
+enable = 0
+type = 1
+container = 1
+codec = 1
+enc-type = 1
+sync = 0
+bitrate = 10000
+rtsp-port = 8557
+udp-port = 5403
+source-id = 3
+link-to-demux = 1
+
+[osd]
+enable = 1
+gpu-id = 0
+border-width = 3
+text-size = 15
+text-color = 1;1;1;1;
+text-bg-color = 0.3;0.3;0.3;1
+font = Arial
+show-clock = 0
+clock-x-offset = 800
+clock-y-offset = 820
+clock-text-size = 12
+clock-color = 1;0;0;0
+nvbuf-memory-type = 0
+
+[streammux]
+gpu-id = 0
+live-source = 1 ##Boolean property to inform muxer that sources are live if rtsp set 1
+batch-size = 8
+batched-push-timeout = 40000 ##time out in usec, to wait after the first buffer is available ##to push the batch even if the complete batch is not formed
+width = 752  ## Set muxer output width and height
+height = 480 ## Set muxer output width and height
+enable-padding = 0 ##Enable to maintain aspect ratio wrt source, and allow black borders, works ##along with width, height properties
+nvbuf-memory-type = 0 #only o for jetson
+
+[primary-gie]
+enable = 1
+gpu-id = 0
+batch-size = 8
+bbox-border-color1 = 0;1;0;1
+bbox-border-color2 = 0;0;1;1
+bbox-border-color3 = 1;1;1;1
+bbox-border-color4 = 0;0;0;1
+bbox-border-color5 = 0;1;1;1
+nvbuf-memory-type = 0
+interval = 4
+gie-unique-id = 1
+labelfile-path = labels.txt
+config-file = yolov5.txt
+
+[tracker]
+enable = 0
+tracker-width = 640
+tracker-height = 288
+ll-lib-file = /opt/nvidia/deepstream/deepstream-5.0/lib/libnvds_nvdcf.so
+ll-config-file = tracker_config.yml
+gpu-id = 0
+enable-batch-process = 0
+
+[nvds-analytics]
+enable = 0
+config-file = config_nvdsanalytics.txt
+
+[tests]
+file-loop = 1
+

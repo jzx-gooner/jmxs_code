@@ -3,6 +3,7 @@
 #1：return：ok（200），fail（500） √
 #2：heart beat：5min
 import os
+from socket import IPPROTO_EON
 import sys
 import time
 import cv2 
@@ -14,7 +15,7 @@ import click
 from distutils.command.build_clib import build_clib
 from genericpath import exists
 from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, jsonify, request, current_app, redirect
+from flask import Flask, jsonify, request, current_app, render_template
 from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_apscheduler import APScheduler
@@ -225,6 +226,7 @@ def verify_token(token):
 @app.route('/')
 def index():
     return '<h1>welcome to sgai jmxs!<h1>'
+    
 #用户注册，保存进数据库
 @app.route('/api/user/register', methods=['POST'])
 def register():
@@ -300,7 +302,8 @@ def Receive():
 #{'data': '{"CmdIndex":"0","TaskID":"","IsUse":"1","CameraList":[{"id":"c202da68-a4d5-4e08-a031-8708b36e806c","ip":"192.168.212.62"}]}'}
 @app.route('/api/setCameraStatus', methods=['POST'])
 def setCameraStatus():
-    print("== 设置相机状态 ==") 
+    print("== 设置相机状态 ==")
+    log.logger.info('设置相机状态') 
     #加载当前相机池
     cameralist = dict()
     #"clientlist" 是redis中客户端列表
@@ -308,16 +311,19 @@ def setCameraStatus():
     if cameralistJson is not None:
         cameralist = json.loads(cameralistJson)
     else:
-        print("相机池里面")
+        print("相机池里面没有相机，请先添加相机")
+        log.logger.info('相机池里面没有相机，请先添加相机')
         return jsonify({"CODE":500,"MESSAGE":"please add camera before set camera"})
     print("数据库里面的相机list")
     print(cameralist)
+    log.logger.info('数据库里面的相机list : {}\n'.format(cameralist))
     post_get = request.form.get('data')
     post_get = json.loads(post_get)
     print("post_get")
     print(post_get)
+    log.logger.info('post_get : {}\n'.format(post_get))
     enable = post_get["IsUse"]
-    print( enable)
+    print(enable)
     post_cameralist = post_get["CameraList"]
     print(post_cameralist)
 
@@ -325,6 +331,7 @@ def setCameraStatus():
         for post in post_cameralist:
             if key[0] == post["id"]:
                 print("在相机池子里找到了该相机ID，给他设置相机状态")
+                log.logger.info("数据库里面的相机list")
                 post_data = dict()
                 post_data["rtsp"] = key[1]["rtsp"]
                 post_data["enable"] = enable
@@ -368,6 +375,7 @@ def addCamera():
     post_get = request.form.to_dict()
     print("接收到的数据")
     print(post_get)
+    log.logger.info('增加相机 接收到的数据 : {}\n'.format(post_get))
 
     for i,s in post_get.items():
         dict_info = json.loads(s)
@@ -377,6 +385,7 @@ def addCamera():
         cameralist = dict()
         cameralistJson = globalredisconn.get("cameralist")
         print("现有的camera list ： ",cameralistJson)
+        log.logger.info('现有的camera list  : {}\n'.format(cameralistJson))
         if cameralistJson is not None:
             cameralist = json.loads(cameralistJson)
 
@@ -417,6 +426,7 @@ def deteteCamera():
 @app.route('/api/KeepAlive', methods=['POST'])
 def heartBeat():
     print("== heart beat ==")
+    log.logger.info('== heart beat ==')
     token = request.form.get("Token")
     return jsonify({"CODE":200,"MESSAGE":None})
 
