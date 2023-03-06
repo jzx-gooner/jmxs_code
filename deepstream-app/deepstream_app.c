@@ -445,7 +445,7 @@ write_kitti_track_output(AppCtx *appCtx, NvDsBatchMeta *batch_meta)
  * and update params for drawing rectangle, object information etc. We also
  * iterate through the object list and encode the cropped objects as jpeg
  * images and attach it as user meta to the respective objects.*/
-/*如果检测到人，修改人的检测数据到最大*/
+/*检测违章*/
 static GstPadProbeReturn
 pgie_src_pad_buffer_probe(GstPad *pad, GstPadProbeInfo *info, gpointer ctx)
 {
@@ -467,21 +467,22 @@ pgie_src_pad_buffer_probe(GstPad *pad, GstPadProbeInfo *info, gpointer ctx)
   NvDsBatchMeta *batch_meta = gst_buffer_get_nvds_batch_meta(buf);
 
   bool go_write = false;
+  bool write_finish = false;
+  //如果不存在flag.txt说明已经把数据推出去了，可以保存新数据了
   if (!file_exists2("/configs_dir/jmxs_images/flag.txt"))
   {
     go_write = true;
   }
 
-  guint o_count = 0;
 
+  guint o_count = 0;
+  //遍历循环一个batch的数据
   for (l_frame = batch_meta->frame_meta_list; l_frame != NULL;
        l_frame = l_frame->next)
   {
-
     NvDsFrameMeta *frame_meta = (NvDsFrameMeta *)(l_frame->data);
     GList *l;
-
-    //判断该帧是否检测到了人
+    //判断该帧图像是否出现了违章，如果o_count>0 说明出现了违章
     o_count = 0;
     for (l = frame_meta->obj_meta_list; l != NULL; l = l->next)
     {
@@ -492,13 +493,12 @@ pgie_src_pad_buffer_probe(GstPad *pad, GstPadProbeInfo *info, gpointer ctx)
       }
     }
 
+    //如果可以写数据，且出现了违章，那么开始写该帧的数据
     if (go_write && o_count > 0)
     {
-
-      //这一帧里面检测到了人，所以，保存这一帧的标签
-      g_print("******save labels************");
+      //首先把检测结果数据保存（不保存人的结果）
       write_labels_output_frame(frame_meta);
-
+      //其次遍历该帧，修改第一个boundingbox的参数，并且保存
       for (l_obj = frame_meta->obj_meta_list; l_obj != NULL; l_obj = l_obj->next)
       {
         //保存这一帧的图片
@@ -521,13 +521,14 @@ pgie_src_pad_buffer_probe(GstPad *pad, GstPadProbeInfo *info, gpointer ctx)
         /*Main Function Call */
         snprintf(userData.fileNameImg, sizeof(userData.fileNameImg), "/configs_dir/jmxs_images/%d_image.png", frame_meta->source_id);
         nvds_obj_enc_process(ctx, &userData, ip_surf, obj_meta, frame_meta);
-        //以上保存完了，跳出遍历该帧的循环
+        //以上保存完了，跳出遍历该帧的循环'
+        write_finish = true;
         break;
       }
     }
   }
   //当batch_meta都遍历完了，生成结束标签
-  if (go_write && o_count > 0)
+  if (write_finish)
   {
     FILE *flag;
     flag = fopen("/configs_dir/jmxs_images/flag.txt", "wb");
@@ -736,9 +737,6 @@ pgie_src_pad_buffer_probe(GstPad *pad, GstPadProbeInfo *info, gpointer ctx)
    * Buffer probe function to get the results of primary infer.
    * Here it demonstrates the use by dumping bounding box coordinates in
    * kitti format.
-   */
-  /**
-   * 保存图片的位置
    */
   static GstPadProbeReturn
   gie_primary_processing_done_buf_prob(GstPad * pad, GstPadProbeInfo * info,
@@ -1835,4 +1833,6 @@ pgie_src_pad_buffer_probe(GstPad *pad, GstPadProbeInfo *info, gpointer ctx)
       return FALSE;
     }
   }
+
+
 

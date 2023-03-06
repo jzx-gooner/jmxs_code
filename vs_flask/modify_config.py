@@ -14,7 +14,7 @@ def set_config_txt(open_list):
     print("open_list的输入是：")
     print(open_list)
     if(new_num_source>0):
-        config_path = "/opt/nvidia/deepstream/deepstream-6.0/sources/apps/sample_apps/deepstream-sgai-jmxs/config/jmxs.txt"
+        config_path = "/opt/nvidia/deepstream/deepstream-6.0/sources/apps/sample_apps/deepstream-app/config/jmxs.txt"
         cf=configparser.ConfigParser()
         cf.read(config_path)
         secs=cf.sections()
@@ -38,7 +38,7 @@ def set_config_txt(open_list):
             else:
                 for i in range(old_num_source):
                     new_sec = "source"+str(i)
-                    cf.set(new_sec,"enable",1)
+                    cf.set(new_sec,"enable","1")
                     cf.set(new_sec,"uri",str(open_list[i][1]))
                 for i in range(old_num_source,new_num_source):
                     new_sec = "source"+str(i)
@@ -46,7 +46,7 @@ def set_config_txt(open_list):
                     if not has_section:
                         cf.add_section(new_sec) 
                     cf.set(new_sec,"uri",str(open_list[i][1]))
-                    cf.set(new_sec,"enable",1)
+                    cf.set(new_sec,"enable","1")
                     cf.set(new_sec,"type","3")
                     cf.set(new_sec,"num-source","1")
                 cf.write(f)

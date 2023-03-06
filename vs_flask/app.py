@@ -3,7 +3,6 @@
 #1：return：ok（200），fail（500） √
 #2：heart beat：5min
 import os
-from socket import IPPROTO_EON
 import sys
 import time
 import cv2 
@@ -21,7 +20,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_apscheduler import APScheduler
 
 from modify_config import set_config_txt
-from tools import kill_arcface, kill_deepstream, start_deepstream, start_redis_server,draw_bounding_box,build_engine
+from tools import kill_arcface, kill_deepstream, start_deepstream, start_redis_server,draw_bounding_box,build_engine,start_monitor,deepstream_status
 from simple_log import Logger
 # docker映射文件夹
 work_dir = "/configs_dir"
@@ -67,9 +66,13 @@ def send_results():
         new_path =  work_dir+"/jmxs_save_result"
         step2_flag =work_dir+"/jmxs_images/flag.txt"
         clientlistJson = globalredisconn.get("clientlist")
+        timeArray_ = time.localtime(float(time.time())+28800)
+        happen_time_ = time.strftime("%Y-%m-%d %H:%M:%S",timeArray_)
+        print(happen_time_)
+        happen_time = happen_time_
         print("====0.现有的client list====")
         print(clientlistJson)
-        log.logger.info('===现有的client list ===: {}\n'.format(clientlistJson))
+        log.logger.info('===0.现有的client list ===: {}\n'.format(clientlistJson))
         #加载当前的相机池
         cameralist = dict()
         cameralistJson = globalredisconn.get("cameralist")
@@ -77,72 +80,80 @@ def send_results():
             cameralist = json.loads(cameralistJson)
         print("===1.现有的camrea list ==== ")
         print(cameralist)
-
+        log.logger.info('===1.现有的camrea list ====: {}\n'.format(cameralist))
         print("===2.参与静默巡视的相机===")
         deepstream_id_list = []
         deepstream_id = globalredisconn.get("deepstream_id")
         print(deepstream_id)
+        log.logger.info('===2.参与静默巡视的相机===: {}\n'.format(deepstream_id))
         if deepstream_id is not None:
             deepstream_id_list = json.loads(deepstream_id)
-
-
+            deepstream_status_result = deepstream_status()
+            print("===3.静默巡视状态=== "+str(deepstream_status_result))
+            log.logger.info('===3.静默巡视状态===: {}\n'.format(deepstream_status_result))
+            if not deepstream_status_result:
+                print("restart deepstream")
+                log.logger.info("=== restart deepstream ====")
+                start_deepstream()
         num_source = len(deepstream_id_list)
         log.logger.info('参与静默巡视的相机 : {}\n'.format(num_source))
         image_list = [work_dir+"/jmxs_images/"+str(i)+"_image.png" for i in range(0,num_source)]
         if(os.path.exists(step2_flag)):
-            timeArray = time.localtime(float(time.time())+28800)
-            happen_time = time.strftime("%Y-%m-%d %H:%M:%S",timeArray)
-            name_time = time.strftime('%Y-%m-%d',time.localtime(time.time()))
             time.sleep(0.1)
             detection_results = []
-            new_folder = new_path + "/" + str(name_time)
             for i,p in enumerate(image_list):
                 if os.path.exists(p):
                     label_path = work_dir+"/jmxs_images/"+str(i)+"_labels.txt"
                     if exists(label_path):
-                        save_jpg_name = draw_bounding_box(label_path)
-                        visiblePicUrl = ip_string+ save_jpg_name.split('/')[-1]
-                        print(visiblePicUrl)
-                        with open(label_path) as f:
-                            lines = f.readlines()
-                            for line in lines:
-                                eventType = line.split(" ")[0]
-                                print("---------------------")
-                                print(eventType)
-                                if eventType in focus_type:
-                                    detection_result = {"ability":"event_frs",
-                                            "eventData":"string",
-                                            "eventId":"1",
-                                            "eventType":label_type_dict[str(eventType)],
-                                            "eventTypeName":label_name_dict[str(eventType)],
-                                            "eventVoice":"",
-                                            "happenTime":happen_time,
-                                            "imageUrl":"",
-                                            "sendTime":happen_time,
-                                            "srcIndex":deepstream_id_list[i][0], #open_list=[["id","rtsp",'0','ip]]
-                                            "srcName":"",
-                                            "srcNameRe":"",
-                                            "srcParentIndex":"string",
-                                            "srcType":"eventRule",
-                                            "status":"0",
-                                            "syncDate":happen_time,
-                                            "timeOut":"0",
-                                            "uids":"string",
-                                            "visiblePicUrl":visiblePicUrl
-                                            }
-                                    detection_results.append(detection_result)
-                                
+                        try:
+                            save_jpg_name,is_send_result = draw_bounding_box(label_path,user_confidence)
+                            visiblePicUrl = ip_string+ save_jpg_name.split('/')[-1]
+                            print(visiblePicUrl)
+                            log.logger.info('图片地址 : {}\n'.format(visiblePicUrl))
+                            if is_send_result:
+                                with open(label_path) as f:
+                                    lines = f.readlines()
+                                    for line in lines:
+                                        eventType = line.split(" ")[0]
+                                        print("---------------------")
+                                        print(eventType)
+                                        if eventType in focus_type:
+                                            detection_result = {"ability":"event_frs",
+                                                    "eventData":"string",
+                                                    "eventId":"1",
+                                                    "eventType":label_type_dict[str(eventType)],
+                                                    "eventTypeName":label_name_dict[str(eventType)],
+                                                    "eventVoice":"",
+                                                    "happenTime":happen_time,
+                                                    "imageUrl":"",
+                                                    "sendTime":happen_time,
+                                                    "srcIndex":deepstream_id_list[i][0], #open_list=[["id","rtsp",'0','ip]]
+                                                    "srcName":"",
+                                                    "srcNameRe":"",
+                                                    "srcParentIndex":"string",
+                                                    "srcType":"eventRule",
+                                                    "status":"0",
+                                                    "syncDate":happen_time,
+                                                    "timeOut":"0",
+                                                    "uids":"string",
+                                                    "visiblePicUrl":visiblePicUrl
+                                                    }
+                                            detection_results.append(detection_result)
+                            else:
+                                print("filted by confidence")
+                                log.logger.info("filted by confidence")
+                        except Exception as e:
+                            print("bad result")
+                            log.logger.info("have bad result")
                      
             files = os.listdir(exchange_path)
 
             for f in files:
                 os.remove(exchange_path+"/"+f)
-            # 检测到数据,发送数据
-            print("准备发送数据")
-            print(detection_results)
             if(len(detection_results)>0):
                 print("发送数据")
-                log.logger.info('发送数据 n')
+                print(detection_results)
+                log.logger.info('发送数据 {}'.format(detection_results))
                 result_json = {"code":0,"data":detection_results,"msg":"成功"}
                 #发送结果,将结果写入给服务端
                 if clientlistJson is not None:
@@ -150,14 +161,13 @@ def send_results():
                     for key in clientlist.keys():
                         print('post--clientlist[str(client_id)]:', clientlist[str(key)]["url"]) #"http://192.168.212.101:5000/api/AlarmResult/"
                         log.logger.info('post--clientlist: {}'.format(clientlist[str(key)]["url"]))
-                        old_time = time.time()
-                        r = requests.post(clientlist[str(key)]["url"],json.dumps(result_json),timeout=5)
-                        current_time = time.time()
-                        print("post运行时间为 ： " + str(current_time - old_time) + "s")
+                        r = requests.post(clientlist[str(key)]["url"],json.dumps(result_json),timeout=8)  #7s钟的超时处理
                         if (r.status_code == 200):
                             print(u"========发送结果成功")
+                            log.logger.info("send successfully") 
                         else:
                             print(u"========发送结果失败")
+                            log.logger.info("send failed")
 
 
 # SQLite URI compatible
@@ -438,9 +448,12 @@ if __name__=="__main__":
     print("1.开启，并且清空redis数据库")
     start_redis_server()
     globalredisconn.flushall()
+    #print("1.5 start monitor")
+    #start_monitor()
     print("2.启动定时服务")
     scheduler = APScheduler(BackgroundScheduler(timezone="Asia/Shanghai"))
     scheduler.init_app(app)
     scheduler.start()
     print("3.启动flask")
     app.run(debug=False,host ='0.0.0.0',port=port_string,use_reloader=False)
+

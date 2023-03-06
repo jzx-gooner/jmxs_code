@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "start apache2"
-/etc/init.d/apache2 start
 echo "start jmxs app"
-python /home/vs_flask/app.py
+cd /home/vs_flask & python monitor.py &
+source go_app.sh 

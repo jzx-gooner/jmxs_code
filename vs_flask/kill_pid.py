@@ -8,7 +8,7 @@ def kill_deepstream():
     pids = psutil.pids()
     for pid in pids:
         p = psutil.Process(pid)
-        if p.name() == 'deepstream-test5-analytics':
+        if p.name() == 'deepstream-app':
             os.kill(pid,signal.SIGKILL)
 
 def kill_arcface():
